@@ -12,7 +12,7 @@ import {
 } from "firebase/firestore";
 import { signOut, onAuthStateChanged } from "firebase/auth";
 import AdminLogin from "./AdminLogin";
-import ReactStars from "react-stars"; // Importante para ver las estrellas
+import { Rating } from 'react-simple-star-rating';
 import "./AdminPanel.css";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaCheck, FaTimes, FaSignOutAlt, FaClipboardList, FaUserCircle } from "react-icons/fa";
@@ -179,12 +179,13 @@ const AdminPanel = () => {
                         </div>
                       </div>
                       <div className="rating-display">
-                        <ReactStars
-                          count={5}
-                          value={review.rating}
-                          size={18}
-                          edit={false}
-                          color2={"#ffd700"}
+                        <Rating
+                          initialValue={review.rating} 
+                          size={20}
+                          readonly={true}
+                          allowFraction={true}
+                          fillColor="#ffd700"
+                          emptyColor="#e5e7eb"
                         />
                       </div>
                     </div>
