@@ -1,0 +1,191 @@
+/* Global Resets and Fonts */
+html {
+  scroll-margin-top: 100px;
+  scroll-behavior: smooth;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Open Sans", sans-serif;
+  color: #333;
+  line-height: 1.6;
+  background-color: #f9f9f9;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* NOTA: Los estilos del Hero han sido movidos a Hero.css
+   para mayor limpieza y modularidad.
+*/
+
+/* Section Wrappers Genéricos */
+section {
+  scroll-margin-top: 80px;
+  padding: 4rem 2rem;
+}
+
+h2 {
+  text-align: center;
+  font-family: "Open Sans", sans-serif; /* Unificado a Open Sans */
+  font-weight: 700;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #0a72b1;
+}
+
+/* Botón Primario Global (Usado en otras secciones si es necesario) */
+.btn-primary {
+  background-color: #0a72b1;
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px; /* Redondeado moderno */
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(10, 114, 177, 0.2);
+}
+
+.btn-primary:hover {
+  background-color: #085a8c;
+  transform: translateY(-2px);
+}
+
+.btn-primary:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Hospital Logos (Si se usan globalmente) */
+.hospital-logo {
+  margin-top: 1rem;
+  height: 50px;
+  object-fit: contain;
+}
+
+/* Botón Flotante de Contacto (Sticky) */
+.sticky-contact-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 2000;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem;
+  background-color: #25D366; /* Color WhatsApp oficial */
+  color: white;
+  font-size: 1.5rem;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-decoration: none;
+}
+
+.sticky-contact-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.contact-icon {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  display: block;
+  fill: white;
+}
+
+/* =========================================
+   Botón Flotante (Floating CTA)
+   ========================================= */
+.floating-cta-button {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 65px;
+  height: 65px;
+  background-color: #0a72b1; /* Azul corporativo */
+  color: white;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2000; /* Siempre encima de todo */
+  box-shadow: 0 4px 15px rgba(10, 114, 177, 0.4);
+  transition: all 0.3s ease;
+  
+  /* Animación de latido sutil */
+  animation: pulse-blue 2s infinite;
+}
+
+.floating-icon {
+  font-size: 1.8rem;
+}
+
+.floating-cta-button:hover {
+  transform: scale(1.1);
+  background-color: #085a8c;
+  box-shadow: 0 6px 20px rgba(10, 114, 177, 0.6);
+  animation: none; /* Se detiene al pasar el mouse */
+}
+
+.floating-cta-button:active {
+  transform: scale(0.95);
+}
+
+/* Animación de Pulso */
+@keyframes pulse-blue {
+  0% {
+    box-shadow: 0 0 0 0 rgba(10, 114, 177, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 15px rgba(10, 114, 177, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(10, 114, 177, 0);
+  }
+}
+
+/* Ajuste para móvil: un poco más pequeño para no estorbar */
+@media (max-width: 768px) {
+  .floating-cta-button {
+    width: 55px;
+    height: 55px;
+    bottom: 20px;
+    right: 20px;
+  }
+  
+  .floating-icon {
+    font-size: 1.5rem;
+  }
+}
+
+/* Fallback de carga */
+.loading-fallback {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: "Open Sans", sans-serif;
+  color: #0a72b1;
+  font-weight: 600;
+}

@@ -1,0 +1,366 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
+
+/* ======= BASE ======= */
+.reviews-section {
+  padding: 5rem 2rem;
+  background-color: #f9f9f9; /* Fondo gris claro */
+  font-family: "Open Sans", sans-serif;
+  color: #333;
+}
+
+.reviews-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Header */
+.section-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.section-header h2 {
+  font-size: 2.5rem;
+  color: #0a72b1;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  color: #666;
+  font-size: 1.1rem;
+}
+
+/* Layout 2 Columnas */
+.reviews-layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3rem;
+  align-items: flex-start;
+}
+
+.form-column, .list-column {
+  flex: 1;
+  min-width: 320px;
+}
+
+/* ======= TARJETA DE FORMULARIO ======= */
+.form-card {
+  background: #fff;
+  padding: 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  border-top: 5px solid #0a72b1;
+}
+
+.form-header h3 {
+  color: #0a72b1;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.form-header p {
+  color: #666;
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Botón Google */
+.btn-google {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: #fff;
+  color: #444;
+  border: 1px solid #ddd;
+  padding: 0.8rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.btn-google:hover {
+  background: #f1f1f1;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.google-icon {
+  color: #DB4437; /* Color oficial Google Red */
+}
+
+/* Divider */
+.divider-text {
+  text-align: center;
+  margin: 1.5rem 0;
+  position: relative;
+  font-size: 0.85rem;
+  color: #888;
+}
+
+.divider-text::before,
+.divider-text::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 30%;
+  height: 1px;
+  background: #eee;
+}
+
+.divider-text::before { left: 0; }
+.divider-text::after { right: 0; }
+
+/* User Badge (Logueado) */
+.user-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #eef7fc;
+  padding: 0.8rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.user-badge img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.user-badge span {
+  font-weight: 600;
+  color: #0a72b1;
+}
+
+/* Form Inputs (Floating Label Style) */
+.input-group {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.input-group input,
+.input-group textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s;
+  background: #fdfdfd;
+}
+
+.input-group textarea {
+  resize: vertical;
+}
+
+.input-group input:focus,
+.input-group textarea:focus {
+  border-color: #0a72b1;
+  background: #fff;
+}
+
+.input-group label {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  color: #999;
+  font-size: 1rem;
+  pointer-events: none;
+  transition: all 0.2s;
+  background: transparent;
+}
+
+/* Floating logic */
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label,
+.input-group textarea:focus + label,
+.input-group textarea:not(:placeholder-shown) + label {
+  top: -10px;
+  left: 10px;
+  font-size: 0.8rem;
+  background: #fff;
+  padding: 0 4px;
+  color: #0a72b1;
+  font-weight: 600;
+}
+
+/* Rating */
+.rating-group {
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+.rating-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #444;
+}
+
+/* Submit Button */
+.btn-submit {
+  width: 100%;
+  padding: 1rem;
+  background: #0a72b1;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: background 0.3s;
+}
+
+.btn-submit:hover {
+  background: #085a8c;
+}
+
+.btn-submit:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* Mensaje Éxito */
+.success-message {
+  text-align: center;
+  padding: 2rem 0;
+}
+.check-icon {
+  width: 60px;
+  height: 60px;
+  background: #d4edda;
+  color: #155724;
+  font-size: 2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+}
+.btn-secondary {
+  margin-top: 1rem;
+  background: transparent;
+  border: 1px solid #0a72b1;
+  color: #0a72b1;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* ======= LISTA DE REVIEWS ======= */
+.reviews-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.reviews-list-header h3 {
+  font-size: 1.3rem;
+  color: #333;
+}
+
+.link-see-more {
+  color: #0a72b1;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+.link-see-more:hover {
+  text-decoration: underline;
+}
+
+/* Tarjeta de Review Individual */
+.review-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  border: 1px solid #eee;
+  position: relative;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 1rem;
+}
+
+.avatar img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.default-avatar {
+  width: 45px;
+  height: 45px;
+  color: #ccc;
+}
+
+.user-meta h4 {
+  margin: 0;
+  font-size: 1rem;
+  color: #333;
+}
+
+.verified-icon {
+  color: #4285F4;
+  margin-left: auto; /* Empuja el icono a la derecha */
+  font-size: 1.2rem;
+  opacity: 0.8;
+}
+
+.card-body {
+  position: relative;
+  padding-left: 20px;
+}
+
+.quote-icon {
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #eee;
+  font-size: 1rem;
+}
+
+.card-body p {
+  color: #555;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  font-style: italic;
+  margin: 0;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  color: #999;
+  padding: 2rem;
+  background: #f1f1f1;
+  border-radius: 8px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .reviews-section {
+    padding: 3rem 1rem;
+  }
+  .reviews-layout {
+    flex-direction: column;
+  }
+  .form-card {
+    padding: 1.5rem;
+  }
+}

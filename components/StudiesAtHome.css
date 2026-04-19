@@ -1,0 +1,190 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
+
+/* Section Container */
+.studies-section {
+  padding: 5rem 2rem;
+  background-color: #f4f7f6; /* Un tono ligeramente "menta/gris" muy clínico */
+  text-align: center;
+  font-family: "Open Sans", sans-serif;
+}
+
+.studies-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Section Title */
+.studies-section h2 {
+  font-size: 2.5rem;
+  color: #0a72b1;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.section-subtitle {
+  color: #666;
+  font-size: 1.1rem;
+  margin-bottom: 3rem;
+}
+
+/* Grid Layout */
+.studies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+/* Individual Study Card */
+.study-card {
+  background: #fff;
+  padding: 2.5rem 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  transition: all 0.3s ease;
+  border-top: 4px solid #0a72b1; /* Detalle de diseño médico */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.study-card:hover {
+  box-shadow: 0 15px 30px rgba(10, 114, 177, 0.15);
+}
+
+/* Icons */
+.icon-wrapper {
+  font-size: 2.5rem;
+  color: #0a72b1;
+  margin-bottom: 1.5rem;
+  background-color: #eef7fc;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+/* Study Card Title */
+.study-card h3 {
+  font-size: 1.25rem;
+  color: #333;
+  margin: 0;
+  font-weight: 600;
+}
+
+/* CTA "Más Estudios" */
+.more-studies-cta {
+  background: linear-gradient(135deg, #0a72b1 0%, #0052a2 100%);
+  padding: 1.5rem 2rem;
+  border-radius: 12px;
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  gap: 1.5rem;
+  max-width: 600px;
+  margin: 0 auto 4rem auto;
+  box-shadow: 0 8px 20px rgba(10, 114, 177, 0.3);
+  text-align: left;
+}
+
+.cta-icon {
+  font-size: 2rem;
+  background: rgba(255,255,255,0.2);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cta-text h4 {
+  font-size: 1.2rem;
+  margin-bottom: 0.3rem;
+  font-weight: 700;
+}
+
+.cta-text p {
+  font-size: 0.95rem;
+  margin: 0;
+  opacity: 0.9;
+}
+
+/* Partners Section */
+.partners-section {
+  text-align: center;
+  border-top: 1px solid #e1e4e8;
+  padding-top: 3rem;
+  width: 100%;
+}
+
+.partners-section h3 {
+  font-size: 1.1rem;
+  color: #888;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 600;
+}
+
+.partner-logo-wrapper {
+  display: inline-block;
+  padding: 1rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.partners-image {
+  max-width: 200px; /* Controlar tamaño del logo */
+  height: auto;
+  display: block;
+  opacity: 0.9;
+  transition: opacity 0.3s;
+}
+
+.partners-image:hover {
+  opacity: 1;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .studies-section {
+    padding: 3rem 1.5rem;
+  }
+
+  .studies-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .study-card {
+    flex-direction: row; /* En móvil, icono a la izquierda y texto a la derecha ahorra espacio vertical */
+    padding: 1.5rem;
+    text-align: left;
+    justify-content: flex-start;
+    border-top: none;
+    border-left: 4px solid #0a72b1;
+  }
+
+  .icon-wrapper {
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+    margin-bottom: 0;
+    margin-right: 1rem;
+  }
+  
+  .more-studies-cta {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+    padding: 1.5rem;
+  }
+}

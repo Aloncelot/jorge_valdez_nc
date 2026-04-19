@@ -1,0 +1,276 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
+
+.admin-login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f8fbff; /* Fondo base muy limpio */
+  font-family: "Open Sans", sans-serif;
+  position: relative;
+  overflow: hidden; 
+  padding: 2rem;
+}
+
+.admin-container {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 420px;
+}
+
+/* Tarjeta Principal */
+.admin-card {
+  background: rgba(255, 255, 255, 0.95); /* Ligera transparencia para ver el fondo borroso */
+  backdrop-filter: blur(10px); /* Efecto vidrio esmerilado */
+  padding: 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+  text-align: center;
+  border-top: 5px solid #0a72b1;
+}
+
+/* Header */
+.admin-header { margin-bottom: 2rem; }
+
+.icon-wrapper {
+  width: 70px;
+  height: 70px;
+  background: #eef7fc;
+  color: #0a72b1;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  margin: 0 auto 1rem;
+  box-shadow: 0 5px 15px rgba(10, 114, 177, 0.15);
+}
+
+.admin-header h2 {
+  color: #0a72b1;
+  margin: 0 0 0.5rem;
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.admin-header p {
+  color: #777;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* Inputs */
+.input-group {
+  position: relative;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.input-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #aaa;
+  z-index: 2;
+  transition: color 0.3s;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px 12px 12px 40px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s;
+  background: #fff;
+}
+
+.input-group input:focus {
+  border-color: #0a72b1;
+  box-shadow: 0 0 0 3px rgba(10, 114, 177, 0.1);
+}
+
+.input-group input:focus ~ .input-icon { color: #0a72b1; }
+
+/* Floating Labels */
+.input-group label {
+  position: absolute;
+  left: 40px;
+  top: 12px;
+  color: #999;
+  pointer-events: none;
+  transition: all 0.2s;
+  background: transparent;
+}
+
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label {
+  top: -10px;
+  left: 10px;
+  font-size: 0.8rem;
+  background: white;
+  padding: 0 5px;
+  color: #0a72b1;
+  font-weight: 600;
+}
+
+/* Botones */
+.btn-login {
+  width: 100%;
+  padding: 12px;
+  background: #0a72b1;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-login:hover { background: #085a8c; }
+.btn-login:disabled { background: #ccc; cursor: not-allowed; }
+
+/* CORRECCIÓN DEL DIVIDER */
+.divider {
+  margin: 1.5rem 0;
+  text-align: center;
+  position: relative;
+  width: 100%;
+}
+
+.divider span {
+  background: white;
+  padding: 0 10px;
+  color: #999;
+  font-size: 0.85rem;
+  position: relative;
+  z-index: 1;
+  /* Estas 2 líneas arreglan el problema del texto vertical: */
+  display: inline-block; 
+  white-space: nowrap; 
+}
+
+.divider::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #eee;
+  z-index: 0;
+}
+
+/* Google Button */
+.btn-google {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: white;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: 600;
+  color: #555;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-google:hover { background: #f8f9fa; border-color: #ccc; }
+.google-icon { color: #DB4437; }
+
+/* Back Link */
+.back-link { margin-top: 2rem; }
+.back-link a {
+  color: #0a72b1;
+  text-decoration: none;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+.back-link a:hover { color: #085a8c; text-decoration: underline; }
+
+.error-msg {
+  background: #fee;
+  color: #c00;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+/* =========================================
+   NUEVO FONDO ANIMADO (Orbes Flotantes)
+   ========================================= */
+.background-shapes {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.shape {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(50px); /* Efecto difuminado suave */
+  opacity: 0.6;
+  animation: float 20s infinite alternate ease-in-out;
+}
+
+/* Orbe 1: Azul principal arriba izquierda */
+.shape-1 {
+  top: -10%;
+  left: -10%;
+  width: 500px;
+  height: 500px;
+  background: rgba(10, 114, 177, 0.15); /* Azul marca */
+  animation-delay: 0s;
+}
+
+/* Orbe 2: Azul claro abajo derecha */
+.shape-2 {
+  bottom: -10%;
+  right: -10%;
+  width: 400px;
+  height: 400px;
+  background: rgba(122, 215, 240, 0.2); /* Azul cian */
+  animation-delay: -5s;
+  animation-duration: 25s;
+}
+
+/* Orbe 3: Pequeño flotando al centro */
+.shape-3 {
+  top: 40%;
+  left: 60%;
+  width: 200px;
+  height: 200px;
+  background: rgba(10, 114, 177, 0.1);
+  animation-delay: -10s;
+  animation-duration: 18s;
+}
+
+@keyframes float {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(30px, 40px) scale(1.1); }
+  100% { transform: translate(-20px, -20px) scale(0.95); }
+}
+
+@media (max-width: 480px) {
+  .admin-login-page { padding: 1rem; }
+  .admin-card { padding: 1.5rem; }
+  /* En móvil reducimos los orbes para rendimiento */
+  .shape { filter: blur(30px); opacity: 0.4; }
+}

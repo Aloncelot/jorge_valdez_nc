@@ -1,0 +1,183 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
+
+/* ======= ESTILO GENERAL ======= */
+.about-section {
+  padding: 6rem 2rem;
+  background-color: #fff; /* Fondo blanco para contraste con secciones grises vecinas */
+  overflow: hidden;
+  font-family: "Open Sans", sans-serif;
+}
+
+.about-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.about-section h2 {
+  font-size: 2.5rem;
+  color: #0a72b1;
+  text-align: center;
+  margin-bottom: 4rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+/* Layout Flexible */
+.about-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 4rem; /* Espacio generoso entre foto y texto */
+  position: relative;
+}
+
+/* ======= IMAGEN CON ESTILO ======= */
+.about-image-wrapper {
+  position: relative;
+  flex: 0 0 400px; /* Ancho base de la imagen */
+  z-index: 2;
+}
+
+.about-image {
+  width: 100%;
+  height: 500px; /* Altura vertical elegante */
+  object-fit: cover;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1); /* Sombra profunda */
+  position: relative;
+  z-index: 2;
+}
+
+/* Elemento decorativo (cuadro azul detrás) */
+.image-backdrop {
+  position: absolute;
+  top: 20px;
+  left: -20px;
+  width: 100%;
+  height: 100%;
+  border: 2px solid #0a72b1;
+  border-radius: 16px;
+  z-index: 1;
+  opacity: 0.3;
+  transition: transform 0.3s ease;
+}
+
+.about-image-wrapper:hover .image-backdrop {
+  transform: translate(-10px, 10px); /* Pequeño movimiento al hover */
+}
+
+/* ======= TEXTO ======= */
+.about-text-box {
+  flex: 1;
+  text-align: left;
+  padding: 1rem;
+}
+
+/* Badge pequeño arriba del nombre */
+.subtitle-badge {
+  display: inline-block;
+  background-color: #eef7fc;
+  color: #0a72b1;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 20px;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.about-text-box h3 {
+  font-size: 2.2rem;
+  color: #222;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.divider-line {
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(to right, #0a72b1, #4facfe);
+  margin-bottom: 2rem;
+  border-radius: 2px;
+}
+
+.about-text-box p {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+  color: #555;
+  line-height: 1.8; /* Lectura cómoda */
+}
+
+.about-text-box strong {
+  color: #0a72b1;
+  font-weight: 600;
+}
+
+/* ======= BOTÓN MODERNO ======= */
+.aboutme-button-wrapper {
+  margin-top: 2.5rem;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.9rem 2rem;
+  background-color: #0a72b1;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 50px; /* Botón píldora */
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(10, 114, 177, 0.3);
+}
+
+.btn-icon {
+  margin-left: 10px;
+  font-size: 0.9rem;
+  transition: transform 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #085a8c;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(10, 114, 177, 0.4);
+}
+
+.btn-primary:hover .btn-icon {
+  transform: translateX(5px);
+}
+
+/* ======= RESPONSIVE (MÓVIL) ======= */
+@media (max-width: 900px) {
+  .about-content {
+    flex-direction: column; /* Apilar verticalmente */
+    gap: 3rem;
+  }
+
+  .about-image-wrapper {
+    flex: unset;
+    width: 80%; /* Imagen no tan ancha en móvil */
+    max-width: 350px;
+  }
+  
+  .about-image {
+    height: 350px;
+  }
+
+  .about-text-box {
+    text-align: center; /* Centrar texto en móvil */
+    padding: 0;
+  }
+
+  .divider-line {
+    margin: 0 auto 2rem auto; /* Centrar línea */
+  }
+
+  .about-text-box h3 {
+    font-size: 1.8rem;
+  }
+}

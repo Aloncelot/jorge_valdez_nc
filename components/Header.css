@@ -1,0 +1,205 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
+
+/* Header Base */
+.header {
+  background-color: #0a72b1; /* Azul corporativo */
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: 80px; /* Un poco más alto para presencia */
+  display: flex;
+  align-items: center;
+  padding: 0 2rem;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease, background-color 0.3s ease;
+  font-family: "Open Sans", sans-serif;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1); /* Sombra sutil siempre */
+}
+
+/* Estado cuando se hace scroll (opcional: reducir tamaño o cambiar color) */
+.header.header-scrolled {
+  height: 70px; /* Se compacta ligeramente */
+  background-color: rgba(10, 114, 177, 0.98); /* Ligera transparencia */
+  backdrop-filter: blur(5px);
+}
+
+.header-hidden {
+  transform: translateY(-100%);
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Logo */
+.logo a {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  letter-spacing: -0.5px;
+}
+
+.logo-suffix {
+  font-weight: 400;
+  opacity: 0.8;
+  font-size: 0.9em;
+  background: rgba(255,255,255,0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* Enlaces Desktop */
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.nav-links li a {
+  text-decoration: none;
+  color: #e0f2fe; /* Blanco azulado para no cansar la vista */
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: color 0.3s ease;
+  position: relative;
+}
+
+/* Efecto Hover subrayado animado */
+.nav-links li a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background-color: #fff;
+  transition: width 0.3s ease;
+}
+
+.nav-links li a:hover {
+  color: #ffffff;
+}
+
+.nav-links li a:hover::after {
+  width: 100%;
+}
+
+/* Botón Admin pequeño */
+.admin-btn-small {
+  font-size: 0.8rem !important;
+  border: 1px solid rgba(255,255,255,0.3);
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+.admin-btn-small:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+/* Hamburger */
+.hamburger {
+  display: none;
+  font-size: 1.5rem;
+  color: #fff;
+  cursor: pointer;
+  z-index: 1100;
+}
+
+/* MENÚ MÓVIL (Slide-in) */
+.mobile-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1001;
+}
+
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 75%;
+  max-width: 300px;
+  height: 100vh;
+  background-color: #ffffff; /* Fondo blanco en móvil para contraste limpio */
+  z-index: 1002;
+  box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.mobile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid #eee;
+  font-weight: 700;
+  color: #0a72b1;
+  font-size: 1.2rem;
+}
+
+.mobile-header button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #333;
+  cursor: pointer;
+}
+
+.mobile-links {
+  list-style: none;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.mobile-links a {
+  text-decoration: none;
+  color: #333;
+  font-size: 1.1rem;
+  font-weight: 600;
+  display: block;
+}
+
+.mobile-links a:hover {
+  color: #0a72b1;
+}
+
+.mobile-divider {
+  height: 1px;
+  background-color: #eee;
+  margin: 1rem 0;
+}
+
+.mobile-admin {
+  color: #999 !important;
+  font-size: 0.9rem !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+  
+  .hamburger {
+    display: block;
+  }
+
+  .header {
+    padding: 0 1.5rem;
+    height: 70px;
+  }
+}
