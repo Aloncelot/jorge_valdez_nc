@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link"; 
-import ReactStars from "react-stars";
+import { Rating } from 'react-simple-star-rating';
 import { db, auth } from "../Firebase";
 import {
   collection,
@@ -145,13 +145,15 @@ const ReviewForm = () => {
 
                     <div className="rating-group">
                       <label>Calificación:</label>
-                      <ReactStars
-                        count={5}
-                        value={rating}
+                      <Rating
+                        onClick={setRating}
+                        initialValue={rating}
+                        ratingValue={rating}
                         size={36}
-                        color2={'#ffd700'} // Color dorado
-                        half={true}
-                        onChange={setRating}
+                        allowFraction={true} 
+                        fillColor="#ffd700" 
+                        emptyColor="#e5e7eb" 
+                        transition={true} 
                       />
                     </div>
 
@@ -223,12 +225,13 @@ const ReviewForm = () => {
                       </div>
                       <div className="user-meta">
                         <h4>{r.name}</h4>
-                        <ReactStars
-                          count={5}
-                          value={r.rating}
+                        <Rating
+                          initialValue={r.rating}
                           size={18}
-                          edit={false}
-                          color2={'#ffd700'}
+                          readonly={true} 
+                          allowFraction={true}
+                          fillColor="#ffd700"
+                          emptyColor="#e5e7eb"
                         />
                       </div>
                       {r.provider === "google" && <FaGoogle className="verified-icon" title="Verificado por Google" />}

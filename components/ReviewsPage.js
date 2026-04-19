@@ -1,7 +1,7 @@
 // ReviewsPage.js
 "use client";
 import React, { useState, useEffect } from "react";
-import ReactStars from "react-stars";
+import { Rating } from 'react-simple-star-rating';
 import Link from "next/link";
 import { db } from "../Firebase";
 import {
@@ -111,12 +111,13 @@ const ReviewsPage = () => {
                     <div className="reviewer-details">
                       <h4>{review.name}</h4>
                       <div className="stars-row">
-                        <ReactStars
-                          count={5}
-                          value={review.rating}
+                        <Rating
+                          initialValue={review.rating}
                           size={18}
-                          edit={false}
-                          color2={"#ffd700"}
+                          readonly={true}
+                          allowFraction={true}
+                          fillColor="#ffd700"
+                          emptyColor="#e5e7eb"
                         />
                         {review.provider === "google" && (
                           <span className="google-badge">

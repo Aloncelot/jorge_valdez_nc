@@ -7,7 +7,7 @@ export const metadata = {
   title: "Jorge Valdez Rivera N.C. | Nutrición Clínica y Tanatología",
   description: "Cuidado metabólico, psicológico y emocional en la Ciudad de México.",
   icons: {
-    icon: "/favicon.ico", // Coloca tu favicon en la carpeta /public
+    icon: "/favicon.ico",
   },
 };
 
