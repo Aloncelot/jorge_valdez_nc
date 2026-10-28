@@ -1,12 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
-
 .admin-login-page {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: #f8fbff; /* Fondo base muy limpio */
-  font-family: "Open Sans", sans-serif;
+  font-family: var(--font-open-sans), "Open Sans", sans-serif;
   position: relative;
   overflow: hidden; 
   padding: 2rem;

@@ -1,8 +1,14 @@
 // components/Services.js
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import Image from "next/image";
+import imgNutricion from "../public/Nutricionintra.webp";
+import imgDeportivo from "../public/asesoramientodeportivo.webp";
+import imgMetabolico from "../public/controlmetabolico.webp";
+import imgCritico from "../public/NEP.webp";
+import imgTanatologia from "../public/tntg.webp";
 import "./Services.css";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa"; // Iconos profesionales
 
 const servicesData = [
@@ -10,31 +16,31 @@ const servicesData = [
     title: "Nutrición Clínica",
     description:
       "Soporte Nutricional Artificial Específico, Nutrición Enteral y Parenteral para pacientes hospitalizados o en casa.",
-    image: "Nutricionintra.webp",
+    image: imgNutricion,
   },
   {
     title: "Asesoramiento Deportivo",
     description:
       "Estrategias de suplementación y nutrición basadas en marcadores bioquímicos para maximizar el rendimiento.",
-    image: "asesoramientodeportivo.webp",
+    image: imgDeportivo,
   },
   {
     title: "Control Metabólico",
     description:
       "Programas clínicos efectivos para la pérdida de peso saludable, sostenible y prevención de enfermedades.",
-    image: "controlmetabolico.webp",
+    image: imgMetabolico,
   },
   {
     title: "Nutrición en Estado Crítico",
     description:
       "Manejo metabólico especializado para diversas patologías agudas y control de comorbilidades complejas.",
-    image: "NEP.webp",
+    image: imgCritico,
   },
   {
     title: "Tanatología y Comportamiento",
     description:
       "Apoyo psicológico integral para afrontar pérdidas y situaciones difíciles, brindando soporte al paciente y su familia.",
-    image: "tntg.webp",
+    image: imgTanatologia,
   },
 ];
 
@@ -58,14 +64,13 @@ const variants = {
 const Services = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0); // 1 para derecha, -1 para izquierda
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    setLoading(true);
-  }, [currentIndex]);
+  // Registro de imágenes ya cargadas. Antes, si la imagen venía de caché
+  // y disparaba onLoad antes del efecto, el spinner se quedaba encendido.
+  const [loadedImages, setLoadedImages] = useState({});
+  const loading = !loadedImages[currentIndex];
 
   const handleImageLoad = () => {
-    setLoading(false);
+    setLoadedImages((prev) => (prev[currentIndex] ? prev : { ...prev, [currentIndex]: true }));
   };
 
   const nextService = () => {
@@ -81,7 +86,7 @@ const Services = () => {
   };
 
   return (
-    <motion.section
+    <m.section
       id="services"
       className="services-section"
       initial={{ opacity: 0 }}
@@ -103,7 +108,7 @@ const Services = () => {
 
         <div className="service-wrapper">
           <AnimatePresence initial={false} custom={direction} mode="wait">
-            <motion.div
+            <m.div
               key={currentIndex}
               custom={direction}
               variants={variants}
@@ -122,11 +127,12 @@ const Services = () => {
                     <div className="simple-spinner"></div>
                   </div>
                 )}
-                <img
+                <Image
                   src={servicesData[currentIndex].image}
                   alt={servicesData[currentIndex].title}
                   onLoad={handleImageLoad}
                   className={loading ? "hidden" : "loaded"}
+                  sizes="(max-width: 768px) 100vw, 600px"
                 />
               </div>
               
@@ -135,7 +141,7 @@ const Services = () => {
                 <div className="divider"></div>
                 <p>{servicesData[currentIndex].description}</p>
               </div>
-            </motion.div>
+            </m.div>
           </AnimatePresence>
         </div>
 
@@ -160,7 +166,7 @@ const Services = () => {
           />
         ))}
       </div>
-    </motion.section>
+    </m.section>
   );
 };
 

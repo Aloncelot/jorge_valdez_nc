@@ -3,16 +3,9 @@
 import React, { useState, useEffect } from "react";
 import { Rating } from 'react-simple-star-rating';
 import Link from "next/link";
-import { db } from "../Firebase";
-import {
-  collection,
-  query,
-  where,
-  orderBy,
-  onSnapshot,
-} from "firebase/firestore";
+import { loadFirestore } from "../Firebase";
 import "./ReviewsPage.css";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { FaUserCircle, FaQuoteLeft, FaArrowLeft, FaGoogle } from "react-icons/fa";
 
 const ReviewsPage = () => {
@@ -21,32 +14,32 @@ const ReviewsPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const reviewsPerPage = 8; // Mostramos 8 por página para equilibrar el grid (4 filas de 2)
 
+  // Lectura única (getDocs) en lugar de una escucha en tiempo real
   useEffect(() => {
     window.scrollTo(0, 0); // Asegurar que empiece arriba al cargar
-    
-    const reviewsRef = collection(db, "reviews");
-    const q = query(
-      reviewsRef,
-      where("approved", "==", true),
-      orderBy("createdAt", "desc")
-    );
-    
-    const unsubscribe = onSnapshot(
-      q,
-      (querySnapshot) => {
-        const reviewsData = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setReviews(reviewsData);
-        setIsLoading(false);
-      },
-      (err) => {
+    let cancelled = false;
+
+    (async () => {
+      try {
+        const { db, fs } = await loadFirestore();
+        const q = fs.query(
+          fs.collection(db, "reviews"),
+          fs.where("approved", "==", true),
+          fs.orderBy("createdAt", "desc")
+        );
+        const querySnapshot = await fs.getDocs(q);
+        if (cancelled) return;
+        setReviews(querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+      } catch (err) {
         console.error("Error fetching reviews: ", err);
-        setIsLoading(false);
+      } finally {
+        if (!cancelled) setIsLoading(false);
       }
-    );
-    return () => unsubscribe();
+    })();
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   // Lógica de Paginación
@@ -88,22 +81,22 @@ const ReviewsPage = () => {
           </div>
         ) : (
           <>
-            <motion.div 
+            <m.div 
               className="reviews-grid"
               variants={containerVariants}
               initial="hidden"
               animate="visible"
             >
               {currentReviews.map((review, index) => (
-                <motion.div 
-                  key={index} 
+                <m.div 
+                  key={review.id} 
                   className="review-card-full"
                   variants={cardVariants}
                 >
                   <div className="review-header">
                     <div className="avatar-wrapper">
                       {review.photoURL ? (
-                        <img src={review.photoURL} alt={review.name} />
+                        <img src={review.photoURL} alt={review.name} referrerPolicy="no-referrer" loading="lazy" />
                       ) : (
                         <FaUserCircle className="default-avatar-icon" />
                       )}
@@ -132,9 +125,9 @@ const ReviewsPage = () => {
                     <FaQuoteLeft className="quote-mark" />
                     <p>{review.comment}</p>
                   </div>
-                </motion.div>
+                </m.div>
               ))}
-            </motion.div>
+            </m.div>
 
             {/* Pagination */}
             {totalPages > 1 && (

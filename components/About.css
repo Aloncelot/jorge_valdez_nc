@@ -1,11 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
-
 /* ======= ESTILO GENERAL ======= */
 .about-section {
   padding: 6rem 2rem;
   background-color: #fff; /* Fondo blanco para contraste con secciones grises vecinas */
   overflow: hidden;
-  font-family: "Open Sans", sans-serif;
+  font-family: var(--font-open-sans), "Open Sans", sans-serif;
 }
 
 .about-container {

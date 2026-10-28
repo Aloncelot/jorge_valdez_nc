@@ -2,7 +2,7 @@
 "use client";
 import React from "react";
 import "./StudiesAtHome.css";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { 
   FaTint, 
   FaFlask, 
@@ -66,7 +66,7 @@ const StudiesAtHome = () => {
         </p>
 
         {/* Grid de Estudios */}
-        <motion.div 
+        <m.div 
           className="studies-grid"
           variants={containerVariants}
           initial="hidden"
@@ -74,7 +74,7 @@ const StudiesAtHome = () => {
           viewport={{ once: true, amount: 0.2 }}
         >
           {studiesData.map((study, index) => (
-            <motion.div 
+            <m.div 
               key={index} 
               className="study-card"
               variants={cardVariants}
@@ -84,12 +84,12 @@ const StudiesAtHome = () => {
                 {study.icon}
               </div>
               <h3>{study.title}</h3>
-            </motion.div>
+            </m.div>
           ))}
-        </motion.div>
+        </m.div>
 
         {/* Tarjeta de "Más Estudios" convertida en Call to Action */}
-        <motion.div 
+        <m.div 
           className="more-studies-cta"
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -103,7 +103,7 @@ const StudiesAtHome = () => {
             <h4>¿Necesitas otro estudio?</h4>
             <p>Contamos con un catálogo amplio. Pregunte por el que requiera.</p>
           </div>
-        </motion.div>
+        </m.div>
 
         {/* Partners Section */}
         <div className="partners-section">

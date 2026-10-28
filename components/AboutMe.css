@@ -1,11 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
-
 /* ======= CONFIGURACIÓN GENERAL ======= */
 .aboutme-section {
   padding: 6rem 2rem;
   background-color: #fff;
   min-height: 100vh;
-  font-family: "Open Sans", sans-serif;
+  font-family: var(--font-open-sans), "Open Sans", sans-serif;
   color: #333;
 }
 

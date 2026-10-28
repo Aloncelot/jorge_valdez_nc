@@ -1,0 +1,66 @@
+rules_version = '2';
+
+// Reglas de seguridad de Firestore para jorge-valdez-nc.
+// Publicar en: Firebase Console > Firestore Database > Reglas
+// (o con la CLI: firebase deploy --only firestore:rules).
+//
+// La lista de administradores debe coincidir con ADMIN_EMAILS en Firebase.js.
+// Sin estas reglas, cualquiera podría crear reseñas ya aprobadas o
+// aprobar/borrar reseñas directamente desde la consola del navegador.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email_verified == true
+        && request.auth.token.email in [
+          'aloncelot@gmail.com',
+          'aloncelot@hotmail.com',
+          'jorgevaldezrivera@gmail.com'
+        ];
+    }
+
+    function validNewReview(d) {
+      return d.keys().hasOnly(['name', 'rating', 'comment', 'approved', 'rejected',
+                               'createdAt', 'photoURL', 'provider', 'uid'])
+        && d.keys().hasAll(['name', 'rating', 'comment', 'approved', 'rejected',
+                            'createdAt', 'provider'])
+        && d.approved == false
+        && d.rejected == false
+        && d.createdAt == request.time
+        && d.name is string && d.name.size() >= 2 && d.name.size() <= 60
+        && d.comment is string && d.comment.size() >= 5 && d.comment.size() <= 1000
+        // La calificación admite medias estrellas (allowFraction)
+        && d.rating is number && d.rating >= 0.5 && d.rating <= 5
+        && (
+          // Reseña manual: sin foto ni uid
+          (d.provider == 'email'
+            && d.get('photoURL', null) == null
+            && d.get('uid', null) == null)
+          ||
+          // Reseña con Google: debe corresponder al usuario autenticado
+          (d.provider == 'google'
+            && request.auth != null
+            && d.uid == request.auth.uid
+            && (d.get('photoURL', null) == null
+                || d.photoURL == request.auth.token.get('picture', '')))
+        );
+    }
+
+    match /reviews/{reviewId} {
+      allow read: if resource.data.approved == true || isAdmin();
+      allow create: if validNewReview(request.resource.data);
+      allow update: if isAdmin()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['approved', 'rejected'])
+        && request.resource.data.approved is bool
+        && request.resource.data.rejected is bool;
+      allow delete: if isAdmin();
+    }
+
+    // Todo lo demás, cerrado.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -1,8 +1,10 @@
 "use client";
 
-import Link from "next/link"; // Importación correcta de Next.js
+import Link from "next/link";
+import Image from "next/image";
+import portrait from "../public/JorgeValdez.webp"; // Importación correcta de Next.js
 import "./About.css";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { FaArrowRight } from "react-icons/fa";
 
 const About = () => {
@@ -10,36 +12,36 @@ const About = () => {
     <section id="about" className="about-section">
       <div className="about-container">
         {/* Título animado */}
-        <motion.h2
+        <m.h2
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
           Acerca de Mí
-        </motion.h2>
+        </m.h2>
 
         <div className="about-content">
           {/* Imagen: Entra desde la izquierda */}
-          <motion.div 
+          <m.div 
             className="about-image-wrapper"
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <img
-              src="JorgeValdez.webp"
+            <Image
+              src={portrait}
               alt="Nutricionista Jorge Valdez"
               className="about-image"
-              loading="lazy"
+              sizes="(max-width: 768px) 350px, 400px"
             />
             {/* Elemento decorativo detrás de la foto */}
             <div className="image-backdrop"></div>
-          </motion.div>
+          </m.div>
 
           {/* Texto: Entra desde la derecha */}
-          <motion.div 
+          <m.div 
             className="about-text-box"
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -68,7 +70,7 @@ const About = () => {
                 <FaArrowRight className="btn-icon" />
               </Link>
             </div>
-          </motion.div>
+          </m.div>
         </div>
       </div>
     </section>

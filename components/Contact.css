@@ -1,10 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
-
 /* ======= BASE ======= */
 .contact-section {
   padding: 5rem 2rem;
   background-color: #fff;
-  font-family: "Open Sans", sans-serif;
+  font-family: var(--font-open-sans), "Open Sans", sans-serif;
   color: #333;
 }
 
@@ -321,4 +319,85 @@
   .section-header h2 {
     font-size: 2rem;
   }
+}
+/* =========================================
+   Aviso de privacidad en el formulario y mapas con consentimiento
+   ========================================= */
+.privacy-note {
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: #666;
+  margin: -0.25rem 0 0.75rem;
+  text-align: left;
+}
+
+.privacy-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: #555;
+  text-align: left;
+  cursor: pointer;
+}
+
+.privacy-check input {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  accent-color: #0a72b1;
+  cursor: pointer;
+}
+
+.privacy-check a {
+  color: #0a72b1;
+  font-weight: 600;
+}
+
+.map-placeholder {
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: #eef7fc;
+  color: #555;
+  text-align: center;
+  font-size: 0.85rem;
+}
+
+.map-placeholder-icon {
+  font-size: 1.6rem;
+  color: #0a72b1;
+}
+
+.map-placeholder button {
+  padding: 0.5rem 1rem;
+  border: 1px solid #0a72b1;
+  border-radius: 8px;
+  background: #fff;
+  color: #0a72b1;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.map-placeholder button:hover {
+  background: #0a72b1;
+  color: #fff;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }

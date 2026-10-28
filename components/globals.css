@@ -11,7 +11,7 @@ html {
 }
 
 body {
-  font-family: "Open Sans", sans-serif;
+  font-family: var(--font-open-sans), "Open Sans", sans-serif;
   color: #333;
   line-height: 1.6;
   background-color: #f9f9f9;
@@ -34,7 +34,7 @@ section {
 
 h2 {
   text-align: center;
-  font-family: "Open Sans", sans-serif; /* Unificado a Open Sans */
+  font-family: var(--font-open-sans), "Open Sans", sans-serif; /* Unificado a Open Sans */
   font-weight: 700;
   font-size: 2rem;
   margin-bottom: 2rem;
@@ -185,7 +185,7 @@ h2 {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  font-family: "Open Sans", sans-serif;
+  font-family: var(--font-open-sans), "Open Sans", sans-serif;
   color: #0a72b1;
   font-weight: 600;
 }

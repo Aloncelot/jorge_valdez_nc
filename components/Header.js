@@ -1,17 +1,18 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 // 1. Importaciones nativas de Next.js
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import "./Header.css";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { FaBars, FaTimes } from "react-icons/fa";
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [lastScrollY, setLastScrollY] = useState(0);
+  const lastScrollY = useRef(0);
+  const ticking = useRef(false);
   
   // 2. Hooks de enrutamiento de Next.js
   const router = useRouter();
@@ -24,23 +25,26 @@ const Header = () => {
     { href: "#reviewform", text: "Testimonios" }, 
   ];
 
+  // Un solo listener + requestAnimationFrame. Antes el efecto dependía de
+  // lastScrollY y se volvía a registrar en cada evento de scroll.
   useEffect(() => {
-    const handleScroll = () => {
+    const update = () => {
       const currentScrollY = window.scrollY;
-
-      if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        setIsHeaderVisible(false);
-      } else {
-        setIsHeaderVisible(true);
-      }
-
+      setIsHeaderVisible(!(currentScrollY > lastScrollY.current && currentScrollY > 100));
       setIsScrolled(currentScrollY > 20);
-      setLastScrollY(currentScrollY);
+      lastScrollY.current = currentScrollY;
+      ticking.current = false;
+    };
+    const handleScroll = () => {
+      if (!ticking.current) {
+        ticking.current = true;
+        requestAnimationFrame(update);
+      }
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY]);
+  }, []);
 
   const handleLinkClick = (e, href) => {
     e.preventDefault();
@@ -87,15 +91,21 @@ const Header = () => {
           ))}         
         </ul>
 
-        <div className="hamburger" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+        <button
+          type="button"
+          className="hamburger"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          aria-label={isMobileMenuOpen ? "Cerrar menú" : "Abrir menú"}
+          aria-expanded={isMobileMenuOpen}
+        >
           {isMobileMenuOpen ? <FaTimes /> : <FaBars />}
-        </div>
+        </button>
       </nav>
 
       <AnimatePresence>
         {isMobileMenuOpen && (
           <>
-            <motion.div 
+            <m.div 
               className="mobile-overlay"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -103,7 +113,7 @@ const Header = () => {
               onClick={() => setIsMobileMenuOpen(false)}
             />
             
-            <motion.div
+            <m.div
               className="mobile-menu"
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
@@ -112,7 +122,7 @@ const Header = () => {
             >
               <div className="mobile-header">
                 <span>Menú</span>
-                <button onClick={() => setIsMobileMenuOpen(false)}><FaTimes /></button>
+                <button type="button" aria-label="Cerrar menú" onClick={() => setIsMobileMenuOpen(false)}><FaTimes /></button>
               </div>
               
               <ul className="mobile-links">
@@ -127,7 +137,7 @@ const Header = () => {
                 {/* 4. Uso de Link de Next.js para rutas internas */}
                 <li><Link href="/admin-login" className="mobile-admin" onClick={() => setIsMobileMenuOpen(false)}>Acceso Admin</Link></li>
               </ul>
-            </motion.div>
+            </m.div>
           </>
         )}
       </AnimatePresence>

@@ -1,100 +1,86 @@
 // components/Maratones.js
+// Mismo diseño y animación que antes. Cambios de rendimiento:
+// - El desplazamiento infinito ahora es una animación CSS (corre en la GPU)
+//   en lugar de framer-motion recalculando 27 tarjetas en JavaScript.
+// - Escritorio/móvil se decide con media queries: se eliminan los dos
+//   listeners de resize duplicados y el desajuste de hidratación en móvil.
+// - Imágenes optimizadas con next/image (algunas pesaban hasta 2500 px).
 "use client";
-import React, { useEffect, useRef, useState, useMemo } from "react";
+import React from "react";
+import Image from "next/image";
 import "./Maratones.css";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
+import img2019 from "../public/2019.webp";
+import imgGlobal from "../public/abbott-world-marathon-majors-launches-global-run-club.webp";
+import imgChicago from "../public/CH Marathon.jpg";
+import img2021 from "../public/2021.jpg";
+import img2022 from "../public/2022.png";
+import img2023 from "../public/2023.png";
+import imgTokyo from "../public/Tokyo Marathon.jpg";
+import img2024 from "../public/2024.png";
+import imgBerlin from "../public/berlin_logo.svg";
+import imgWMM from "../public/World-Marathon-Majors.jpg";
 
 const marathonsData = [
   {
     title: "Edición XXXVII del Maratón de la Ciudad de México",
     date: "Agosto 2019",
-    image: "2019.webp",
+    image: img2019,
   },
   {
     title: "Abbott WMM Global Run Club Plataforma virtual",
     date: "Noviembre 2020",
-    image: "abbott-world-marathon-majors-launches-global-run-club.webp",
-    extraImage: "World-Marathon-Majors.jpg",
+    image: imgGlobal,
+    extraImage: imgWMM,
   },
   {
     title: "Abbot World Marathon Majors Maratón de Chicago",
     date: "Octubre 2021",
-    image: "CH Marathon.jpg",
-    extraImage: "World-Marathon-Majors.jpg",
+    image: imgChicago,
+    extraImage: imgWMM,
   },
   {
     title: "Edición XXXVIII MARATÓN DE LA CIUDAD DE MÉXICO",
     date: "Noviembre 2021",
-    image: "2021.jpg",
+    image: img2021,
   },
   {
     title: "Edición XXXIX MARATÓN DE LA CIUDAD DE MÉXICO",
     date: "Agosto 2022",
-    image: "2022.png",
+    image: img2022,
   },
   {
     title: "Edición XL MARATÓN DE LA CIUDAD DE MÉXICO",
     date: "Agosto 2023",
-    image: "2023.png",
+    image: img2023,
   },
   {
     title: "Abbott World Marathon Majors Maratón de Tokio",
     date: "Marzo 2024",
-    image: "Tokyo Marathon.jpg",
-    extraImage: "World-Marathon-Majors.jpg",
+    image: imgTokyo,
+    extraImage: imgWMM,
   },
   {
     title: "Edición XLI MARATÓN DE LA CIUDAD DE MÉXICO",
     date: "Agosto 2024",
-    image: "2024.png",
+    image: img2024,
   },
   {
     title: "Berlín Marathon 2025",
     date: "Septiembre 2025",
-    image: "berlin_logo.svg",
-    extraImage: "World-Marathon-Majors.jpg",
+    image: imgBerlin,
+    extraImage: imgWMM,
   },
 ];
 
+// 3 copias para el bucle infinito en escritorio; en móvil el CSS oculta las copias.
+const loopedMarathons = [0, 1, 2].flatMap((copy) =>
+  marathonsData.map((item, i) => ({ ...item, copy, key: `${copy}-${i}` }))
+);
+
 const Maratones = () => {
-  const [isMobile, setIsMobile] = useState(false); // Por defecto asumimos escritorio en el servidor
-
-useEffect(() => {
-  // Esta función comprueba el tamaño de la pantalla
-  const checkMobile = () => {
-    setIsMobile(window.innerWidth < 768);
-  };
-
-  // 1. La ejecutamos una vez al montar el componente en el navegador
-  checkMobile();
-
-  // 2. Escuchamos si el usuario redimensiona la ventana
-  window.addEventListener("resize", checkMobile);
-  
-  // 3. Limpiamos el evento al desmontar
-  return () => window.removeEventListener("resize", checkMobile);
-}, []);
-  const carouselRef = useRef(null);
-
-  const CARD_WIDTH_WITH_GAP = 378; 
-
-  const loopedMarathons = useMemo(() => {
-    return [...marathonsData, ...marathonsData, ...marathonsData];
-  }, []);
-
-  const singleSetWidth = marathonsData.length * CARD_WIDTH_WITH_GAP;
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
   return (
-    <motion.section
+    <m.section
       id="maratones"
       className="maratones-section"
       initial={{ opacity: 0, y: 30 }}
@@ -105,56 +91,32 @@ useEffect(() => {
       <h2>Maratones</h2>
       <p>Maratones en los que he participado</p>
 
-      <div className="carousel-container fade-mask" ref={carouselRef}>
-        <div className={`maratones-carousel ${isMobile ? "swipe-enabled" : ""}`}>
-          {isMobile ? (
-            <div className="maratones-inner infinite-scroll">
-              {marathonsData.map((marathon, index) => (
-                <div className="maraton-card" key={index}>
-                  <img src={marathon.image} alt={marathon.title} loading="lazy" />
-                  {marathon.extraImage && (
-                    <img
-                      src={marathon.extraImage}
-                      alt="extra"
-                      className="extra-image"
-                      loading="lazy"
-                    />
-                  )}
-                  <h3>{marathon.title}</h3>
-                  <p className="date">{marathon.date}</p>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <motion.div
-              className="maratones-inner infinite-scroll"
-              animate={{ x: [0, -singleSetWidth] }}
-              transition={{
-                repeat: Infinity,
-                ease: "linear",
-                duration: 35,
-              }}
-            >
-              {loopedMarathons.map((marathon, index) => (
-                <div className="maraton-card" key={index}>
-                  <img src={marathon.image} alt={marathon.title} loading="lazy" />
-                  {marathon.extraImage && (
-                    <img
-                      src={marathon.extraImage}
-                      alt="extra"
-                      className="extra-image"
-                      loading="lazy"
-                    />
-                  )}
-                  <h3>{marathon.title}</h3>
-                  <p className="date">{marathon.date}</p>
-                </div>
-              ))}
-            </motion.div>
-          )}
+      <div className="carousel-container fade-mask">
+        <div className="maratones-carousel swipe-enabled">
+          <div className="maratones-inner infinite-scroll">
+            {loopedMarathons.map((marathon) => (
+              <div
+                className={`maraton-card${marathon.copy > 0 ? " maraton-dup" : ""}`}
+                key={marathon.key}
+                aria-hidden={marathon.copy > 0 ? "true" : undefined}
+              >
+                <Image src={marathon.image} alt={marathon.title} sizes="300px" />
+                {marathon.extraImage && (
+                  <Image
+                    src={marathon.extraImage}
+                    alt="Abbott World Marathon Majors"
+                    className="extra-image"
+                    sizes="80px"
+                  />
+                )}
+                <h3>{marathon.title}</h3>
+                <p className="date">{marathon.date}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-    </motion.section>
+    </m.section>
   );
 };
 

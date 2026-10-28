@@ -2,6 +2,7 @@ import React from "react";
 import "./Footer.css";
 import { FaFacebookF, FaWhatsapp, FaPhoneAlt, FaEnvelope, FaLock, FaTerminal } from "react-icons/fa";
 import Link from "next/link"; // <-- Importación correcta de Next.js
+import CookiePreferencesButton from "./CookiePreferencesButton";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -19,7 +20,7 @@ const Footer = () => {
             <a href="https://facebook.com/Nutricionjorge" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
               <FaFacebookF />
             </a>
-            <a href="https://wa.me/5554373485" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+            <a href="https://wa.me/525554373485" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
               <FaWhatsapp />
             </a>
           </div>
@@ -55,7 +56,11 @@ const Footer = () => {
             &copy; {currentYear} Jorge Valdez Rivera N.C. Todos los derechos reservados.
           </p>
 
-          <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+          <div className="footer-legal-links">
+            <Link href="/aviso-de-privacidad" className="admin-link-discrete">
+              Aviso de Privacidad
+            </Link>
+            <CookiePreferencesButton className="admin-link-discrete footer-link-button" />
             <a 
               href="https://quasar-devs.vercel.app/" 
               target="_blank" 

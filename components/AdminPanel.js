@@ -1,20 +1,11 @@
 // components/AdminPanel.js
 "use client";
 import React, { useState, useEffect } from "react";
-import { db, auth } from "../Firebase";
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  updateDoc,
-  doc,
-} from "firebase/firestore";
-import { signOut, onAuthStateChanged } from "firebase/auth";
+import { loadAuth, loadFirestore, isAdminUser } from "../Firebase";
 import AdminLogin from "./AdminLogin";
 import { Rating } from 'react-simple-star-rating';
 import "./AdminPanel.css";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { FaCheck, FaTimes, FaSignOutAlt, FaClipboardList, FaUserCircle } from "react-icons/fa";
 
 const AdminPanel = () => {
@@ -22,61 +13,70 @@ const AdminPanel = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [denied, setDenied] = useState(false);
   const [checkingAuth, setCheckingAuth] = useState(true);
 
-  // Verificar autenticación y permisos
+  // Verificar autenticación y permisos.
+  // Ahora exige correo verificado y cierra la sesión de cuentas no autorizadas.
+  // OJO: esto solo controla la interfaz; la protección real está en firestore.rules.
   useEffect(() => {
-    const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
-      if (
-        user &&
-        (user.email === "aloncelot@gmail.com" ||
-          user.email === "aloncelot@hotmail.com" ||
-          user.email === "jorgevaldezrivera@gmail.com")
-      ) {
-        setIsAdmin(true);
-      } else {
-        setIsAdmin(false);
-      }
-      setCheckingAuth(false);
+    let unsubscribeAuth = () => {};
+    let alive = true;
+    loadAuth().then(({ auth, fa }) => {
+      if (!alive) return;
+      unsubscribeAuth = fa.onAuthStateChanged(auth, async (user) => {
+        if (user && !isAdminUser(user)) {
+          await fa.signOut(auth);
+          setDenied(true);
+          setIsAdmin(false);
+        } else {
+          setIsAdmin(Boolean(user));
+        }
+        setCheckingAuth(false);
+      });
     });
-    return unsubscribeAuth;
+    return () => {
+      alive = false;
+      unsubscribeAuth();
+    };
   }, []);
 
   // Cargar reseñas pendientes
   useEffect(() => {
-    const fetchPendingReviews = async () => {
-      if (!isAdmin) return;
-      setLoading(true);
+    if (!isAdmin) return;
+    let cancelled = false;
+    (async () => {
       try {
-        const reviewsRef = collection(db, "reviews");
-        const q = query(
-          reviewsRef,
-          where("approved", "==", false),
-          where("rejected", "==", false)
+        const { db, fs } = await loadFirestore();
+        const q = fs.query(
+          fs.collection(db, "reviews"),
+          fs.where("approved", "==", false),
+          fs.where("rejected", "==", false)
         );
-        const snapshot = await getDocs(q);
-        const reviewsData = snapshot.docs.map((d) => ({
-          id: d.id,
-          ...d.data(),
-        }));
-        setPendingReviews(reviewsData);
+        const snapshot = await fs.getDocs(q);
+        if (cancelled) return;
+        setPendingReviews(snapshot.docs.map((d) => ({ id: d.id, ...d.data() })));
       } catch (err) {
         console.error("Error fetching pending reviews:", err);
-        setError("Error al cargar reseñas pendientes.");
+        if (!cancelled) setError("Error al cargar reseñas pendientes.");
+      } finally {
+        if (!cancelled) setLoading(false);
       }
-      setLoading(false);
+    })();
+    return () => {
+      cancelled = true;
     };
-
-    if (isAdmin) {
-      fetchPendingReviews();
-    }
   }, [isAdmin]);
+
+  const updateReview = async (reviewId, data) => {
+    const { db, fs } = await loadFirestore();
+    await fs.updateDoc(fs.doc(db, "reviews", reviewId), data);
+  };
 
   // Aprobar
   const approveReview = async (reviewId) => {
     try {
-      const ref = doc(db, "reviews", reviewId);
-      await updateDoc(ref, { approved: true, rejected: false });
+      await updateReview(reviewId, { approved: true, rejected: false });
       // Eliminamos de la lista localmente para feedback inmediato
       setPendingReviews((prev) => prev.filter((r) => r.id !== reviewId));
     } catch (err) {
@@ -89,8 +89,7 @@ const AdminPanel = () => {
   const rejectReview = async (reviewId) => {
     if(!window.confirm("¿Seguro que deseas rechazar esta reseña?")) return;
     try {
-      const ref = doc(db, "reviews", reviewId);
-      await updateDoc(ref, { approved: false, rejected: true });
+      await updateReview(reviewId, { approved: false, rejected: true });
       setPendingReviews((prev) => prev.filter((r) => r.id !== reviewId));
     } catch (err) {
       console.error("Error rejecting review:", err);
@@ -98,8 +97,9 @@ const AdminPanel = () => {
     }
   };
 
-  const handleLogout = () => {
-    signOut(auth);
+  const handleLogout = async () => {
+    const { auth, fa } = await loadAuth();
+    await fa.signOut(auth);
   };
 
   // Mientras verificamos auth, mostramos loader
@@ -113,7 +113,7 @@ const AdminPanel = () => {
 
   // Si no es admin, mostramos Login
   if (!isAdmin) {
-    return <AdminLogin />;
+    return <AdminLogin initialError={denied ? "Esta cuenta no tiene acceso al panel." : ""} />;
   }
 
   return (
@@ -155,10 +155,9 @@ const AdminPanel = () => {
             <div className="reviews-grid">
               <AnimatePresence>
                 {pendingReviews.map((review) => (
-                  <motion.div 
+                  <m.div 
                     key={review.id} 
                     className="admin-review-card"
-                    layout
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
@@ -166,7 +165,7 @@ const AdminPanel = () => {
                     <div className="card-top">
                       <div className="user-info">
                         {review.photoURL ? (
-                          <img src={review.photoURL} alt="Avatar" />
+                          <img src={review.photoURL} alt="Avatar" referrerPolicy="no-referrer" />
                         ) : (
                           <FaUserCircle className="default-avatar" />
                         )}
@@ -174,7 +173,7 @@ const AdminPanel = () => {
                           <h4>{review.name}</h4>
                           <span className="review-date">
                             {/* Si tienes timestamp de firebase, conviértelo aquí */}
-                            {review.createdAt?.toDate().toLocaleDateString() || "Reciente"}
+                            {review.createdAt?.toDate ? review.createdAt.toDate().toLocaleDateString("es-MX") : "Reciente"}
                           </span>
                         </div>
                       </div>
@@ -210,7 +209,7 @@ const AdminPanel = () => {
                         <FaCheck /> Aprobar
                       </button>
                     </div>
-                  </motion.div>
+                  </m.div>
                 ))}
               </AnimatePresence>
             </div>

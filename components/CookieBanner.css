@@ -1,0 +1,106 @@
+/* =========================================
+   Aviso de cookies (mismo estilo del sitio: Open Sans, azul #0a72b1)
+   ========================================= */
+.cookie-banner {
+  position: fixed;
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
+  z-index: 2100; /* encima del botón flotante de agenda (2000) */
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.25rem 1.5rem;
+  background: #fff;
+  color: #333;
+  border-radius: 16px;
+  border: 1px solid rgba(10, 114, 177, 0.15);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  font-family: var(--font-open-sans), "Open Sans", sans-serif;
+}
+
+.cookie-banner-content {
+  flex: 1;
+}
+
+.cookie-banner-title {
+  font-weight: 700;
+  color: #0a72b1;
+  margin-bottom: 0.25rem;
+}
+
+.cookie-banner-text {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #555;
+}
+
+.cookie-banner-text a {
+  color: #0a72b1;
+  font-weight: 600;
+}
+
+.cookie-banner-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.cookie-btn {
+  padding: 0.7rem 1.2rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  white-space: nowrap;
+}
+
+.cookie-btn-primary {
+  background: #0a72b1;
+  color: #fff;
+  border: 1px solid #0a72b1;
+}
+
+.cookie-btn-primary:hover {
+  background: #085a8c;
+}
+
+.cookie-btn-secondary {
+  background: #fff;
+  color: #0a72b1;
+  border: 1px solid #0a72b1;
+}
+
+.cookie-btn-secondary:hover {
+  background: #eef7fc;
+}
+
+.cookie-btn:focus-visible,
+.cookie-banner-text a:focus-visible {
+  outline: 2px solid #0a72b1;
+  outline-offset: 2px;
+}
+
+@media (max-width: 768px) {
+  .cookie-banner {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+    padding: 1rem 1.1rem;
+  }
+
+  .cookie-banner-actions {
+    flex-direction: column-reverse;
+  }
+
+  .cookie-btn {
+    width: 100%;
+  }
+}

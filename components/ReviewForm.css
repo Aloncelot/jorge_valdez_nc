@@ -1,10 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
-
 /* ======= BASE ======= */
 .reviews-section {
   padding: 5rem 2rem;
   background-color: #f9f9f9; /* Fondo gris claro */
-  font-family: "Open Sans", sans-serif;
+  font-family: var(--font-open-sans), "Open Sans", sans-serif;
   color: #333;
 }
 
@@ -363,4 +361,40 @@
   .form-card {
     padding: 1.5rem;
   }
+}
+/* =========================================
+   Aviso de privacidad en el formulario de reseñas
+   ========================================= */
+.review-form .privacy-note {
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: #666;
+  margin: 0 0 0.75rem;
+  text-align: left;
+}
+
+.review-form .privacy-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: #555;
+  text-align: left;
+  cursor: pointer;
+}
+
+.review-form .privacy-check input {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  accent-color: #0a72b1;
+  cursor: pointer;
+}
+
+.review-form .privacy-check a {
+  color: #0a72b1;
+  font-weight: 600;
 }

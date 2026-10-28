@@ -1,13 +1,15 @@
 "use client";
 import "./AboutMe.css";
 // 1. Importación nativa de Next.js
-import Link from "next/link"; 
-import { motion } from "framer-motion";
+import Link from "next/link";
+import Image from "next/image";
+import portrait from "../public/JorgeValdez.webp";
+import { m } from "framer-motion";
 import { FaArrowLeft, FaUniversity, FaHospital, FaIdCard, FaCheckCircle } from "react-icons/fa";
 
 const AboutMe = () => {
   return (
-    <motion.section 
+    <m.section 
       id="about-me" 
       className="aboutme-section"
       initial={{ opacity: 0 }}
@@ -22,24 +24,26 @@ const AboutMe = () => {
         </div>
 
         <div className="aboutme-content">
-          <motion.div 
+          <m.div 
             className="aboutme-image-wrapper"
             initial={{ x: -50, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <img
-              src="JorgeValdez.webp"
+            <Image
+              src={portrait}
               alt="Lic. Jorge Valdez Rivera"
               className="aboutme-image"
+              sizes="350px"
+              preload
             />
             <div className="experience-badge">
               <span className="years">+10 Años</span>
               <span className="text">Experiencia Clínica</span>
             </div>
-          </motion.div>
+          </m.div>
 
-          <motion.div 
+          <m.div 
             className="aboutme-text-box"
             initial={{ x: 50, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
@@ -97,10 +101,10 @@ const AboutMe = () => {
                 Volver al Inicio
               </Link>
             </div>
-          </motion.div>
+          </m.div>
         </div>
       </div>
-    </motion.section>
+    </m.section>
   );
 };
 
